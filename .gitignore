@@ -1,0 +1,5 @@
+# Obsidian per-device UI state (changes on every note open/pane move)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+# Smart Connections / other plugin caches
+.smart-env/
