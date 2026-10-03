@@ -8,6 +8,7 @@ You drop source documents (reports, articles, transcripts, CSVs, internal docs) 
 - **Claude Code**: the Claude desktop app (Code tab) or the `claude` CLI. <https://claude.com/claude-code>
 - **Obsidian** (free) for reading the wiki. <https://obsidian.md>
 - **Git** (optional, recommended) so every change is saved as a version. <https://git-scm.com>
+- **Python 3** (optional, recommended) for the safety checks below. Add PyYAML (`pip install pyyaml`) and they also check that frontmatter is valid YAML. <https://www.python.org>
 
 ## Setup (about 10 minutes)
 1. **Unzip** this folder somewhere backed up (OneDrive, Dropbox, Google Drive, or a git remote). Rename it if you like, e.g. `acme-wiki`.
@@ -33,6 +34,7 @@ You can also give facts in chat ("our Denver office opened in 2019") and ask Cla
 ```
 CLAUDE.md            The rulebook Claude follows: page formats, workflows, safety rules
 .claude/skills/      setup-wiki, session-start, session-end, plus Obsidian syntax helpers
+.claude/hooks/       Safety checks that run on every edit (see below)
 .obsidian/           Obsidian settings, with the Dataview plugin bundled
 raw/                 YOUR sources. Claude reads these but never edits them
   articles/  papers/  transcripts/  data/  assets/  repos/
@@ -47,6 +49,13 @@ wiki/                Claude's wiki. Claude writes here
   entities/          organization/, competitors/, people/ (setup may add more)
   comparisons/  syntheses/   Answers worth keeping, filed from questions
 ```
+
+## Safety checks
+Two checks in `.claude/hooks/wiki_hooks.py` run automatically while Claude works, so the wiki stays a source of truth:
+- **`raw/` is locked.** Any attempt by Claude to edit a file in `raw/` is blocked.
+- **Every wiki page is checked after each edit:** frontmatter present (and valid YAML, with PyYAML), wiki-links in frontmatter quoted, every link showing a proper name, `cluster:` set on concept and entity pages, hubs have an `In this cluster` section, no unescaped `|` in links inside tables, no `{{PLACEHOLDER}}` left on a page. Claude fixes what it finds before moving on. Unquoted or broken links silently drop out of Obsidian's graph and backlinks, so this is what keeps the graph connected.
+
+They need Python 3 on your PATH (`python3` or `python`). Without it they don't run, and the same rules still apply from `CLAUDE.md`.
 
 ## Tips
 - **Keep `raw/` untouched.** Add files; don't edit or delete them. Claude cites them by path.
