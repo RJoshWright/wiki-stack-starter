@@ -3,3 +3,5 @@
 .obsidian/workspace-mobile.json
 # Smart Connections / other plugin caches
 .smart-env/
+# Python bytecode from running tests
+__pycache__/
