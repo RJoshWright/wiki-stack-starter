@@ -26,6 +26,7 @@ Say these to Claude in the session:
 | Any question, e.g. `who are our biggest competitors?` | Answers from the wiki with links; offers to file good answers as a page |
 | `lint` | Health check: contradictions, orphan pages, missing pages, stale claims |
 | `where did we leave off?` | Plans the session: what's waiting, what's ready, top 3 next steps |
+| `design before you build: <idea>` | Before building an agent, automation, skill or web tool (or reworking one that isn't working), walks you through a one-page spec in `wiki/specs/`. Nothing gets built until you approve it |
 | `wrap up` | Commits, updates the hot cache, notes open questions for next time |
 
 You can also give facts in chat ("our Denver office opened in 2019") and ask Claude to record them. They're saved as a source page, since `raw/` is read-only.
@@ -33,7 +34,7 @@ You can also give facts in chat ("our Denver office opened in 2019") and ask Cla
 ## Folder map
 ```
 CLAUDE.md            The rulebook Claude follows: page formats, workflows, safety rules
-.claude/skills/      setup-wiki, session-start, session-end, plus Obsidian syntax helpers
+.claude/skills/      setup-wiki, session-start, session-end, designing-builds, plus Obsidian syntax helpers
 .claude/hooks/       Safety checks that run on every edit (see below)
 .obsidian/           Obsidian settings, with the Dataview plugin bundled
 raw/                 YOUR sources. Claude reads these but never edits them
@@ -48,6 +49,7 @@ wiki/                Claude's wiki. Claude writes here
   concepts/          Topics and ideas; each cluster has one hub page
   entities/          organization/, competitors/, people/ (setup may add more)
   comparisons/  syntheses/   Answers worth keeping, filed from questions
+  specs/             Design specs for things you build (designing-builds skill)
 ```
 
 ## Safety checks

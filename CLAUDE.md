@@ -15,6 +15,7 @@ Owner: {{OWNER_NAME}} ({{OWNER_ROLE}}). Findings are read by: {{AUDIENCE}}.
 - `wiki/index.md` — master catalog. Update on EVERY ingest. Organized cluster-first: one `## Cluster: Display Name (`slug`)` block per cluster with a one-line `>` description, a `**Hub:**` line, member concepts as bullets, then `**Entities:**` bullets. After the clusters: Comparisons, Syntheses (with dates), Source Summaries (with dates), Navigation Files. Entries use `- [[slug|Proper Name]] — one-line summary`. No source counts (lint checks depth instead).
 - `wiki/log.md` — append-only activity log, oldest first. Never delete or reorder entries. At session start, after reading hot.md, run `grep "^## \[" wiki/log.md | tail -5` (recent activity) and `grep "^## \[.*#failure" wiki/log.md` (known dead ends).
 - `wiki/overview.md` — cluster navigation hub and high-level synthesis. Revise after major ingests. Sections: What This Wiki Is (with source, page and cluster counts), Cluster Map (one line until clusters need a diagram), one `## Cluster: Display Name` section per cluster (`**Enter at:**` hub, 2–3 sentences with the cluster's main findings, `**Key entry points:**` as "Question?" → page, `**Synthesis:**` lines only once syntheses exist), Biggest Gaps, Graph Health (one line, refreshed by lint). Describes clusters; does not list every page (that is index.md's job).
+- `wiki/specs/` — design specs for things you build (agents, automations, skills, web tools), written with the `designing-builds` skill. See Spec Pages below.
 - `wiki/dashboard.md` — Dataview dashboard (review queue, source depth, clusters, lint helpers). Renders only in Obsidian; Claude lints from the files, not from it.
 - `CLAUDE.md` — this file. Re-read at the start of every session.
 - `wiki/hot.md` — session hot cache (~500 words). Read silently at session start BEFORE responding. Rewrite per the Hot Cache rules below.
@@ -99,6 +100,23 @@ sources: ["[[source1]]", "[[source2]]"]
 related: ["[[concept1]]"]  # REQUIRED: Back-link upward to member pages
 filed_from_query: true
 date: YYYY-MM-DD
+---
+
+### Spec Pages (wiki/specs/)
+One design spec per build (agent, automation, skill or web tool), written with the `designing-builds` skill before anything is built. File name `{build-slug}.md`. The body follows the skill's template (`.claude/skills/designing-builds/assets/design-spec-template.md`): 14 numbered sections plus a Version log. List specs in wiki/index.md under a "Specs" heading after Syntheses.
+
+---
+type: spec
+title: "Spec: Build Name"
+build_type: automation | skill | web-tool | other
+mode: build | improve
+status: draft | parked | approved | live | retired
+decision: build-first | build-later | wrong-target
+owner: "Owner Name"
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+review_date: YYYY-MM-DD
+related: ["[[concept1]]"]
 ---
 
 ## Clusters
